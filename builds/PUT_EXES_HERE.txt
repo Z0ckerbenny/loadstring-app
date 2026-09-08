@@ -1,0 +1,10 @@
+Lege hier per GitHub-Webseite (Add file -> Upload files) ab:
+  1) LoadstringCracker.exe   (kompilierte Haupt-App)
+  2) Uninstall.exe           (kompilierter Uninstaller)
+
+und LOESCHE danach diese Platzhalter-Datei.
+
+Wichtig: Die Dateinamen muessen EXAKT so lauten
+(gleiche Gross-/Kleinschreibung, keine _ oder Leerzeichen),
+weil genau so die URLs in version.json lauten.
+Sonst gibt es einen 404-Fehler ("Download failed").
