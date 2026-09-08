@@ -1,33 +1,32 @@
 # 🚀 Release-Anleitung – Installer + Auto-Update
 
-So verteilst du deine App: **Setup.exe an Freunde geben** → Setup lädt immer die neueste Version von GitHub → installierte App sucht bei jedem Start automatisch nach Updates.
+So verteilst du deine App: **Setup.exe an Freunde geben** → Setup lädt immer die neueste Version von GitHub → installierte App sucht bei jedem Start automatisch nach Updates. Die App erscheint in **Windows-Einstellungen → Apps → Installierte Apps** (mit Deinstallation).
 
 ## Wie es funktioniert
 
 ```
 GitHub-Repo "loadstring-app" (PUBLIC!)
-├── version.json                    <- aktuelle Versionsnummer + Download-Link
+├── version.json                    <- Version + Download-Links + Changelog
 └── builds/
-    └── LoadstringCracker.exe       <- die aktuelle App (einfach ersetzen)
+    ├── LoadstringCracker.exe       <- die aktuelle App (einfach ersetzen)
+    └── Uninstall.exe               <- der aktuelle Uninstaller (einfach ersetzen)
 ```
 
-- **Setup.exe** (`LoadstringCracker_Installer.pb` kompiliert): liest `version.json`, lädt die Exe nach `%LOCALAPPDATA%\LoadstringCracker\`, erstellt Desktop- + Startmenü-Verknüpfungen, startet die App.
-- **App** (`LoadstringCracker_Licensed.pb`): prüft bei jedem Start `version.json`. Neue Version → Dialog → 1 Klick → Download → automatischer Neustart in die neue Version.
+- **Setup.exe** (`LoadstringCracker_Installer.pb` kompiliert): Options-Seite (Desktop-/Startmenü-Häkchen, Autostart) → lädt neueste Version nach `%LOCALAPPDATA%\LoadstringCracker\` → erstellt Verknüpfungen → trägt die App in „Installierte Apps“ ein → startet die App.
+- **App** (`LoadstringCracker_Licensed.pb`): prüft bei jedem Start schon im Ladebildschirm `version.json`. Neue Version → wird sofort automatisch geladen + installiert (App + Uninstaller) → automatischer Neustart. Kein Klick nötig.
+- **Uninstall.exe** (`LoadstringCracker_Uninstaller.pb` kompiliert): löscht App-Dateien, Key, Verknüpfungen und den Registry-Eintrag.
 
-## Einmalig einrichten (ca. 10 Min)
+## Einmalig einrichten
 
-1. **Neues GitHub-Repo erstellen**, z. B. `loadstring-app` → ⚠️ **Public!** (Private geht nicht, sonst schlägt der Download fehl.)
-2. **`version.json` hochladen** (Vorlage liegt bei: `updater/version.json`):
-   - `DEINNAME` durch deinen GitHub-Namen ersetzen
+1. **GitHub-Repo** `loadstring-app` → ⚠️ **Public!** (Private geht nicht, sonst 404 beim Download.)
+2. **`version.json` hochladen** (Vorlage liegt bei, deine URLs sind schon eingetragen):
    - `version` muss zu `#APP_VERSION` in der `.pb`-Datei passen (Start: `2.0.0`)
-3. **In BEIDEN `.pb`-Dateien** die Konstante setzen (muss exakt gleich sein!):
-   ```purebasic
-   #VERSION_URL = "https://raw.githubusercontent.com/DEINNAME/loadstring-app/main/version.json"
-   ```
-   - `LoadstringCracker_Licensed.pb` → kompilieren als `LoadstringCracker.exe`
-   - `LoadstringCracker_Installer.pb` → kompilieren als `Setup.exe`
-4. **Exe hochladen:** Im Repo Ordner `builds/` erstellen → `LoadstringCracker.exe` per Web-Upload („Add file → Upload files“) hochladen.
-5. **Test:** `Setup.exe` starten → installiert die App → App starten → kein Update-Dialog = alles passt. ✅
+3. **3× kompilieren** (alle `.pb` in `purebasic-projekte/`):
+   - `LoadstringCracker_Licensed.pb` → als `LoadstringCracker.exe`
+   - `LoadstringCracker_Installer.pb` → als `Setup.exe`
+   - `LoadstringCracker_Uninstaller.pb` → als `Uninstall.exe`
+4. **Beide Exes hochladen:** Im Repo Ordner `builds/` erstellen → `LoadstringCracker.exe` + `Uninstall.exe` per Web-Upload hochladen (exakte Namen, Groß-/Kleinschreibung beachten!).
+5. **Test:** `Setup.exe` starten → Installation startet von selbst (Optionen vorher ändern oder abbrechen möglich) → App startet → Versionsnummer prüfen = passt ✅ → in Windows-Einstellungen → Apps → Installierte Apps nach „Loadstring Cracker“ schauen ✅
 6. **`Setup.exe` an Freunde geben** – mehr brauchen sie nie. Das Setup lädt immer die neueste Version.
 
 ## Bei jedem Update (neue Version rausbringen)
@@ -36,12 +35,12 @@ GitHub-Repo "loadstring-app" (PUBLIC!)
    ```purebasic
    #APP_VERSION = "2.0.1"   ; z. B. 2.0.0 -> 2.0.1
    ```
-2. Neu kompilieren → `LoadstringCracker.exe`
-3. Auf GitHub: alte `builds/LoadstringCracker.exe` **ersetzen** (Datei anklicken → „Replace“ / oder neu hochladen, gleicher Name!)
+2. Neu kompilieren → `LoadstringCracker.exe` (Uninstaller nur neu kompilieren, wenn du ihn geändert hast)
+3. Auf GitHub: alte Exe(s) in `builds/` **ersetzen** (Datei anklicken → „Replace“ / oder neu hochladen, gleicher Name!)
 4. `version.json` anpassen: `version` + `changelog`-Text → committen
-5. Fertig – alle installierten Apps bieten das Update beim nächsten Start automatisch an. 🎉
+5. Fertig – alle installierten Apps updaten sich beim nächsten Start automatisch im Ladebildschirm. 🎉
 
-> 💡 **Setup.exe muss fast nie neu kompiliert werden** – nur wenn sich die `#VERSION_URL` ändert (z. B. neues Repo). Es lädt ja immer die neueste App-Version.
+> 💡 **Setup.exe muss fast nie neu kompiliert werden** – nur wenn sich die `#VERSION_URL` ändert. Es lädt ja immer die neueste App-Version.
 
 ## Versionsnummern
 
@@ -54,13 +53,16 @@ Format `Haupt.Neben.Patch`, z. B. `2.1.0`. Die App vergleicht jede Stelle einzel
 
 - Download wird geprüft: Mindestgröße + `MZ`-Header (echte Windows-Exe, keine Fehlerseite)
 - Update ersetzt die Exe erst nach erfolgreichem Download (per Helper-Skript + Neustart)
-- Lizenz-Key bleibt erhalten (liegt separat in `%LOCALAPPDATA%\LoadstringCracker\license.key`)
+- Lizenz-Key bleibt bei Updates erhalten (liegt separat als `license.key`)
+- Deinstallation löscht alles: Dateien, Key, Verknüpfungen, Registry-Eintrag
 
 ## Fehlerbehebung
 
 | Problem | Lösung |
 |---|---|
-| Setup meldet „Invalid version info“ | `version.json`-URL prüfen (`#VERSION_URL`), JSON-Syntax prüfen (Kommas!) |
-| „Download failed“ | Exe-URL in `version.json` im Browser testen – muss den Download starten |
-| Update-Dialog kommt nicht | `#APP_VERSION` in der Exe vs. `version` in JSON vergleichen; GitHub braucht ~1–5 Min (Cache) |
+| Setup: „Download failed (received 14 bytes)“ | **404!** Exe liegt nicht (richtig) auf GitHub – Pfad + Dateiname + Großschreibung prüfen (so wie dein `_`-Fall) |
+| Setup: „Invalid version info“ | `version.json`-URL prüfen, JSON-Syntax prüfen (Kommas!) |
+| „Download failed (0 bytes)“ | Kein Internet oder GitHub down |
+| Update-Dialog kommt nicht | `#APP_VERSION` vs. `version` in JSON vergleichen; GitHub braucht ~1–5 Min (Cache) |
 | „Could not write the app file“ | App läuft noch → schließen → Retry |
+| App nicht in „Installierte Apps“ | `Uninstall.exe` fehlt in `builds/` oder `uninstallUrl` fehlt in `version.json` → Setup fragt dann nichts ein |
