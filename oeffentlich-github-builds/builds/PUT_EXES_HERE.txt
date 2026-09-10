@@ -1,0 +1,17 @@
+Lege hier per GitHub-Webseite (Add file -> Upload files) EXAKT diese 6 Dateien ab
+und LOESCHE danach diese Platzhalter-Datei:
+
+  1) installer-LoadstringCracker.exe  (Installer Loadstring Cracker)
+  2) LoadstringCracker.exe        (Haupt-App Loadstring Cracker)
+  3) uninstaller-LoadstringCracker.exe                (Deinstaller Loadstring Cracker)
+  4) installer-RobloxSpoofer.exe      (Installer Roblox Spoofer)
+  5) RobloxSpoofer.exe            (Haupt-App Roblox Spoofer)
+  6) uninstaller-RobloxSpoofer.exe        (Deinstaller Roblox Spoofer)
+
+WICHTIG: Dateinamen muessen EXAKT so lauten (Gross-/Kleinschreibung!),
+weil genau so die URLs in version.json + version-spoofer.json lauten
+und der Server (/download, /download-spoofer) dorthin weiterleitet.
+Sonst gibt es 404-Fehler ("Download failed").
+
+Kompiliert wird in Ordner 3 (purebasic-quellen/): je App 3x kompilieren.
+Die Namen stehen auch oben in jeder .pb-Datei im Kopf-Kommentar.
