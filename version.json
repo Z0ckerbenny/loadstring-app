@@ -1,8 +1,8 @@
 {
   "app": "LoadstringCracker",
-  "version": "2.1.25",
+  "version": "2.1.27",
   "url": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/LoadstringCracker.exe",
-  "uninstallUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/Uninstall.exe",
-  "setupUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/Setup-LoadstringCracker.exe",
-  "changelog": "Unified design, bug fixes and improvements."
+  "uninstallUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/uninstaller-LoadstringCracker.exe",
+  "setupUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/installer-LoadstringCracker.exe",
+  "changelog": "Fix PureBasic reserved keyword Module in shared icon helper."
 }

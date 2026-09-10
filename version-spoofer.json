@@ -1,8 +1,8 @@
 {
   "app": "RobloxSpoofer",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "url": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/RobloxSpoofer.exe",
-  "uninstallUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/Uninstall-Spoofer.exe",
-  "setupUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/Setup-RobloxSpoofer.exe",
-  "changelog": "Unified design, bug fixes and improvements."
+  "uninstallUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/uninstaller-RobloxSpoofer.exe",
+  "setupUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/installer-RobloxSpoofer.exe",
+  "changelog": "New Black Systems dashboard: sidebar, dark cards, profile workspace, direct official Roblox download link; fix shared icon helper compiler error."
 }

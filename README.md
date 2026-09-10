@@ -11,15 +11,15 @@ loadstring-app (PUBLIC!)
 ├── version-spoofer.json    <- Roblox Spoofer: Version + Download-Links + Changelog
 ├── README.md               <- diese Datei (optional auf GitHub)
 └── builds/
-    ├── Setup-LoadstringCracker.exe  <- Installer Cracker  (Server: /download)
+    ├── installer-LoadstringCracker.exe  <- Installer Cracker  (Server: /download)
     ├── LoadstringCracker.exe        <- Haupt-App Cracker  (Auto-Update lädt diese)
-    ├── Uninstall.exe                <- Deinstaller Cracker
-    ├── Setup-RobloxSpoofer.exe      <- Installer Spoofer  (Server: /download-spoofer)
+    ├── uninstaller-LoadstringCracker.exe                <- Deinstaller Cracker
+    ├── installer-RobloxSpoofer.exe      <- Installer Spoofer  (Server: /download-spoofer)
     ├── RobloxSpoofer.exe            <- Haupt-App Spoofer  (Auto-Update lädt diese)
-    └── Uninstall-Spoofer.exe        <- Deinstaller Spoofer
+    └── uninstaller-RobloxSpoofer.exe        <- Deinstaller Spoofer
 ```
 
-Namensregel: **Setups heißen immer `Setup-<Appname>.exe`** — damit man sie nie verwechselt.
+Namensregel: **Jede App hat immer 3 Exes: `installer-<Appname>.exe`, `<Appname>.exe`, `uninstaller-<Appname>.exe`** — damit man sie nie verwechselt.
 
 ## Einmalig einrichten
 
@@ -27,20 +27,17 @@ Namensregel: **Setups heißen immer `Setup-<Appname>.exe`** — damit man sie ni
 2. `version.json` + `version-spoofer.json` hochladen (liegen bei, URLs sind schon eingetragen).
 3. Ordner `builds/` erstellen → die **6 kompilierten Exes** aus Ordner 3 hochladen (exakte Namen, siehe `builds/PUT_EXES_HERE.txt`).
 4. Platzhalter-Datei `PUT_EXES_HERE.txt` auf GitHub wieder löschen.
-5. Test: `Setup-LoadstringCracker.exe` runterladen → installieren → App startet → Version stimmt ✅ → in Windows „Installierte Apps" nachsehen ✅
+5. Test: `installer-LoadstringCracker.exe` runterladen → installieren → App startet → Version stimmt ✅ → in Windows „Installierte Apps" nachsehen ✅
 
 ## Bei jedem Update (neue Version rausbringen)
 
-**Loadstring Cracker:**
-1. In `LoadstringCracker_Licensed.pb`: `#APP_VERSION` erhöhen (z. B. `2.1.25` → `2.1.26`)
-2. Neu kompilieren → `LoadstringCracker.exe`
-3. Auf GitHub in `builds/` die alte Exe **ersetzen** (gleicher Name!) — `Uninstall.exe` nur ersetzen, wenn geändert
-4. `version.json`: `version` + `changelog` anpassen → committen
-5. Fertig — alle installierten Apps updaten sich beim nächsten Start automatisch 🎉
+1. Im lokalen BlackSystems-Hauptordner `python tools/release.py --app LoadstringCracker --bump patch --message "Änderung"` ausführen (für Spoofer `--app RobloxSpoofer`, für beide `--app all`). Umfang passend als Patch/Minor/Major wählen.
+2. Alle drei Programme der betroffenen App neu kompilieren, mit den vorgeschriebenen EXE-Namen.
+3. Die EXEs in `builds/` ersetzen.
+4. **Danach** die bereits synchronisierte `version.json` bzw. `version-spoofer.json` veröffentlichen.
+5. Den Update-Ablauf und die Icons unter Windows prüfen.
 
-**Roblox Spoofer:** genauso, mit `#APP_VERSION` in `RobloxSpoofer.pb` → `RobloxSpoofer.exe` → `version-spoofer.json`.
-
-> 💡 Die **Setups müssen fast nie neu kompiliert** werden — nur wenn sich die GitHub-URLs ändern. Sie laden immer die neueste Version.
+Installer laden weiterhin die neueste Haupt-App. Geänderte Installer-/Uninstaller-Binärdateien müssen ebenfalls veröffentlicht werden. Die aktuelle Version 2.1.27 / 1.1.0 ist schon eingetragen; zum Bauen dieser Korrektur nicht nochmals erhöhen.
 
 ## Versionsnummern
 
@@ -50,7 +47,12 @@ Format `Haupt.Neben.Patch` (z. B. `2.1.0`). Die Apps vergleichen jede Stelle ein
 
 | Problem | Lösung |
 |---|---|
-| Setup: „Download failed" / 0–14 Bytes | 404! Exe liegt nicht (richtig) auf GitHub — Dateiname + Großschreibung prüfen |
+| Installer: „Download failed" / 0–14 Bytes | 404! Exe liegt nicht (richtig) auf GitHub — Dateiname + Großschreibung prüfen |
 | „Invalid version info" | `version.json`-URL prüfen, JSON-Syntax prüfen (Kommas!) |
 | Update kommt nicht | `#APP_VERSION` vs. JSON vergleichen; GitHub braucht ~1–5 Min (Cache) |
-| App nicht in „Installierte Apps" | `Uninstall.exe` fehlt in `builds/` oder `uninstallUrl` fehlt in JSON |
+| App nicht in „Installierte Apps" | `uninstaller-LoadstringCracker.exe` fehlt in `builds/` oder `uninstallUrl` fehlt in JSON |
+
+
+## Verbindliche Versionierung und Icon-Korrektur
+
+Bei jeder Änderung die Version der betroffenen App passend als Patch/Minor/Major erhöhen, synchron in allen drei PB-Quellen und der Versions-JSON. Dafür `python tools/release.py --app all --bump patch --message "Änderung"` im BlackSystems-Hauptordner verwenden; `--check` prüft die Übereinstimmung. Die aktuelle Korrektur ist bereits als **2.1.27 / 1.1.0** eingetragen. Alle sechs EXEs neu kompilieren, EXEs zuerst hochladen, JSON zuletzt. Details und Icon-Anleitung: `purebasic-quellen/README.md`.

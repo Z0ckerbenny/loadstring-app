@@ -1,12 +1,12 @@
 Lege hier per GitHub-Webseite (Add file -> Upload files) EXAKT diese 6 Dateien ab
 und LOESCHE danach diese Platzhalter-Datei:
 
-  1) Setup-LoadstringCracker.exe  (Installer Loadstring Cracker)
+  1) installer-LoadstringCracker.exe  (Installer Loadstring Cracker)
   2) LoadstringCracker.exe        (Haupt-App Loadstring Cracker)
-  3) Uninstall.exe                (Deinstaller Loadstring Cracker)
-  4) Setup-RobloxSpoofer.exe      (Installer Roblox Spoofer)
+  3) uninstaller-LoadstringCracker.exe                (Deinstaller Loadstring Cracker)
+  4) installer-RobloxSpoofer.exe      (Installer Roblox Spoofer)
   5) RobloxSpoofer.exe            (Haupt-App Roblox Spoofer)
-  6) Uninstall-Spoofer.exe        (Deinstaller Roblox Spoofer)
+  6) uninstaller-RobloxSpoofer.exe        (Deinstaller Roblox Spoofer)
 
 WICHTIG: Dateinamen muessen EXAKT so lauten (Gross-/Kleinschreibung!),
 weil genau so die URLs in version.json + version-spoofer.json lauten
