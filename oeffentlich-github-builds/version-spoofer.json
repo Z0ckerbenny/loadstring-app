@@ -1,8 +1,0 @@
-{
-  "app": "RobloxSpoofer",
-  "version": "1.0.1",
-  "url": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/RobloxSpoofer.exe",
-  "uninstallUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/uninstaller-RobloxSpoofer.exe",
-  "setupUrl": "https://raw.githubusercontent.com/Z0ckerbenny/loadstring-app/main/builds/installer-RobloxSpoofer.exe",
-  "changelog": "Unified design, bug fixes and improvements."
-}
