@@ -1,6 +1,0 @@
-Lege hier die kompilierte Datei "LoadstringCracker.exe" ab
-(z.B. per GitHub-Webseite: Add file -> Upload files)
-und LOESCHE danach diese Platzhalter-Datei.
-
-Wichtig: Der Dateiname muss exakt "LoadstringCracker.exe" sein,
-weil genau so die URL in version.json lautet.
